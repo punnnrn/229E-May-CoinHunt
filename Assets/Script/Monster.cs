@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
@@ -33,13 +33,15 @@ public class Monster : MonoBehaviour
 
             if (distance <= followRange)
             {
-                if (distance > attackRange)
+                RaycastHit hit;
+                Vector3 direction = (player.position - transform.position).normalized;
+
+                if (Physics.Raycast(transform.position, direction, out hit, followRange))
                 {
-                    agent.SetDestination(player.position);
-                }
-                else
-                {
-                    agent.ResetPath();
+                    if (hit.collider.CompareTag("Player"))
+                    {
+                        agent.SetDestination(player.position);
+                    }
                 }
             }
         }
