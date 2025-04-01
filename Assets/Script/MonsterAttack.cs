@@ -19,17 +19,20 @@ public class MonsterAttack : MonoBehaviour
         AttackPlayer();
     }
 
-    void AttackPlayer()
+   void AttackPlayer()
+{
+    RaycastHit hit;
+    Vector3 direction = (player.position - transform.position).normalized;
+
+    if (Physics.Raycast(transform.position, direction, out hit, attackRange))
     {
-        if (Vector3.Distance(transform.position, player.position) <= attackRange)
+        if (hit.collider.CompareTag("Player") && Time.time - lastAttackTime >= attackCooldown)
         {
-            if (Time.time - lastAttackTime >= attackCooldown)
-            {
-                lastAttackTime = Time.time;
-                DealDamageToPlayer();
-            }
+            lastAttackTime = Time.time;
+            DealDamageToPlayer();
         }
     }
+}
 
     void DealDamageToPlayer()
     {
