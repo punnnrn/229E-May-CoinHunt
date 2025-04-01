@@ -2,11 +2,11 @@
 
 public class MonsterAttack : MonoBehaviour
 {
-    public float attackRange = 2f;  // ระยะที่มอนสเตอร์สามารถโจมตีผู้เล่นได้
-    public float attackDamage = 10f;  // ความเสียหายที่มอนสเตอร์ทำ
-    private Transform player;  // ตัวแปรเก็บตำแหน่งของผู้เล่น
-    private float attackCooldown = 2f;  // เวลาคูลดาวน์สำหรับการโจมตีซ้ำ
-    private float lastAttackTime = 0f;  // เวลาที่มอนสเตอร์โจมตีล่าสุด
+    public float attackRange = 2f;
+    public float attackDamage = 10f;
+    private Transform player;
+    private float attackCooldown = 2f;
+    private float lastAttackTime = 0f;
 
     void Start()
     {
@@ -21,13 +21,10 @@ public class MonsterAttack : MonoBehaviour
 
     void AttackPlayer()
     {
-        // ตรวจสอบระยะการโจมตี
         if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
-            // ตรวจสอบว่าเวลาคูลดาวน์ของการโจมตีหมดหรือยัง
             if (Time.time - lastAttackTime >= attackCooldown)
             {
-                // เรียกฟังก์ชันโจมตี
                 lastAttackTime = Time.time;
                 DealDamageToPlayer();
             }
@@ -42,7 +39,6 @@ public class MonsterAttack : MonoBehaviour
         {
             playerHealth.TakeDamage(attackDamage);
 
-            // เรียกฟังก์ชัน ShowHitBorder ใน PlayerHealthUI
             PlayerHealthUI playerHealthUI = player.GetComponent<PlayerHealthUI>();
             if (playerHealthUI != null)
             {
